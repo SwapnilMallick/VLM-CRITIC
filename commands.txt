@@ -1,0 +1,15 @@
+Run record_demo.py:
+
+python record_demo.py --camera sideview --n_demos 1 --steps 200 --video --seed 0
+
+Available cameras: agentview, sideview, frontview, birdview, robot0_robotview, robot0_eye_in_hand
+
+Run create_ood_state.py:
+
+python create_ood_state.py --camera sideview --ref reference_demos_sideview.h5 --out ood_state_sideview.npz --demo demo_0 --ood_frac 0.3 --drift 0.05 --drift_dir x
+
+python create_ood_state.py --camera frontview --ref reference_demos_frontview.h5 --out ood_state_frontview.npz --demo demo_0 --ood_frac 0.3 --drift 0.20 --drift_dir y
+
+
+
+Available drift directions: x, -x, y, -y, z, -z, or a custom vector like --drift_dir=1,0.5,0
