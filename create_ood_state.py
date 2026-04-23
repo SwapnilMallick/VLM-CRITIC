@@ -146,10 +146,11 @@ def render_ood_image(
                         If None, falls back to env.reset() (cube at default spawn).
 
     Returns:
-        (image_rgb, ood_eef_pos, ood_joint_pos)
-          image_rgb    — rendered RGB frame (256, 256, 3) uint8
-          ood_eef_pos  — actual EEF position after FK (3,) float64
+        (image_rgb, ood_eef_pos, ood_joint_pos, ood_sim_state)
+          image_rgb     — rendered RGB frame (256, 256, 3) uint8
+          ood_eef_pos   — actual EEF position after FK (3,) float64
           ood_joint_pos — perturbed joint positions (7,) float64
+          ood_sim_state — flattened MuJoCo state after perturbation (qpos+qvel)
     """
     # Seed before reset so the cube's random fallback position is deterministic
     # (only matters when ref_sim_state is None and state restoration must be skipped).
@@ -206,8 +207,12 @@ def render_ood_image(
     if camera in CAMERAS_NEEDING_VFLIP:
         image = image[::-1]
 
+    # Capture the full sim state after perturbation so render_candidate_actions.py
+    # can restore the exact OOD scene (robot + cube) before stepping each action.
+    ood_sim_state = env.sim.get_state().flatten()
+
     env.close()
-    return image, ood_eef_pos, q_ood
+    return image, ood_eef_pos, q_ood, ood_sim_state
 
 
 def save_image(image_rgb: np.ndarray, path: str) -> None:
@@ -231,7 +236,7 @@ def build_ood_state(args):
     # --- Jacobian IK + re-render ---
     ref_sim_state = ref["sim_states"][ood_t] if ref["sim_states"] is not None else None
     print("Computing Jacobian and re-rendering OOD image …")
-    ood_image, ood_eef_pos, ood_joint_pos = render_ood_image(delta_eef, ref_sim_state, args.camera)
+    ood_image, ood_eef_pos, ood_joint_pos, ood_sim_state = render_ood_image(delta_eef, ref_sim_state, args.camera)
 
     ref_eef = ref["eef_pos"][ood_t]
     achieved_delta = ood_eef_pos - ref_eef
@@ -248,6 +253,7 @@ def build_ood_state(args):
         "joint_pos": ood_joint_pos,
         "joint_vel": ref["joint_vel"][ood_t],
         "gripper":   ref["gripper_qpos"][ood_t],
+        "sim_state": ood_sim_state,
     }
 
     ref_state = {
