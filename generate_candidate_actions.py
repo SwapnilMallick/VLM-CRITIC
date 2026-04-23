@@ -16,6 +16,7 @@ Usage:
 """
 
 import argparse
+import os
 
 import numpy as np
 
@@ -87,6 +88,9 @@ if __name__ == "__main__":
     if args.ood is None:
         args.ood = f"ood_state_{args.camera}.npz"
     if args.out is None:
-        args.out = f"candidate_actions_{args.camera}.npz"
+        # Derive output name from the ood filename so that
+        # --ood ood_state_frontview.npz → candidate_actions_frontview.npz
+        ood_basename = os.path.basename(args.ood)
+        args.out = ood_basename.replace("ood_state_", "candidate_actions_", 1)
 
     main(args)

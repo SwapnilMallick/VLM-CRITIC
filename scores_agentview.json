@@ -1,0 +1,77 @@
+[
+  {
+    "rank": 1,
+    "action_idx": 1,
+    "score": 3,
+    "reason": "The result keeps the robot arm displaced to the right side similar to the OOD state, while the reference shows the arm centered above the block; minimal correction toward the reference configuration.",
+    "action": [
+      0.5721286105539076,
+      -0.7437727346489083,
+      -0.09922812420886573,
+      -0.25840395153483753,
+      0.8535299776972036,
+      0.2877302401613291,
+      0.64552322654166
+    ]
+  },
+  {
+    "rank": 2,
+    "action_idx": 0,
+    "score": 2,
+    "reason": "The result remains in the drifted configuration with the arm far to the right and away from the block, showing no meaningful correction toward the reference state where the arm is centered and positioned above the block.",
+    "action": [
+      0.5479120971119267,
+      -0.12224312049589536,
+      0.7171958398227649,
+      0.3947360581187278,
+      -0.8116453042247009,
+      0.9512447032735118,
+      0.5222794039807059
+    ]
+  },
+  {
+    "rank": 3,
+    "action_idx": 2,
+    "score": 2,
+    "reason": "The result remains in the drifted OOD state with the arm far to the right and away from the block, showing virtually no correction toward the reference where the arm is centered above/near the block.",
+    "action": [
+      -0.11317160234533774,
+      -0.5455225564304462,
+      0.1091695740316696,
+      -0.8723654877916494,
+      0.6552623439851641,
+      0.2633287982441297,
+      0.5161754801707477
+    ]
+  },
+  {
+    "rank": 4,
+    "action_idx": 3,
+    "score": 2,
+    "reason": "The result remains in the drifted state with the arm displaced to the right and the block not elevated, showing no meaningful correction toward the reference where the block is raised high and the arm is centered.",
+    "action": [
+      -0.2909480637402633,
+      0.9413960487898065,
+      0.7862422426443954,
+      0.5567669941475237,
+      -0.6107225842960649,
+      -0.06655799254593164,
+      -0.9123924684255424
+    ]
+  },
+  {
+    "rank": 5,
+    "action_idx": 4,
+    "score": 2,
+    "reason": "The result remains in the drifted state with the arm far to the right and away from the block, showing no meaningful correction toward the reference where the arm was centered and positioned above/near the block.",
+    "action": [
+      -0.6914210158649043,
+      0.36609790648490925,
+      0.48952431181563427,
+      0.93501946486842,
+      -0.3483492837236961,
+      -0.25908058793026223,
+      -0.06088837744838416
+    ]
+  }
+]
