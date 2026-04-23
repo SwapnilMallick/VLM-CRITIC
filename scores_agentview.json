@@ -1,24 +1,9 @@
 [
   {
     "rank": 1,
-    "action_idx": 1,
-    "score": 3,
-    "reason": "The result keeps the robot arm displaced to the right side similar to the OOD state, while the reference shows the arm centered above the block; minimal correction toward the reference configuration.",
-    "action": [
-      0.5721286105539076,
-      -0.7437727346489083,
-      -0.09922812420886573,
-      -0.25840395153483753,
-      0.8535299776972036,
-      0.2877302401613291,
-      0.64552322654166
-    ]
-  },
-  {
-    "rank": 2,
     "action_idx": 0,
-    "score": 2,
-    "reason": "The result remains in the drifted configuration with the arm far to the right and away from the block, showing no meaningful correction toward the reference state where the arm is centered and positioned above the block.",
+    "score": 3,
+    "reason": "The result remains in the drifted position with the arm displaced to the right and far from the block, showing minimal correction toward the reference state where the arm was centered above/near the block.",
     "action": [
       0.5479120971119267,
       -0.12224312049589536,
@@ -30,10 +15,25 @@
     ]
   },
   {
+    "rank": 2,
+    "action_idx": 1,
+    "score": 3,
+    "reason": "The result remains in the drifted position with the robot arm far to the right and the block not elevated as in the reference, showing minimal correction toward the reference state where the block is held high above the centered robot.",
+    "action": [
+      0.5721286105539076,
+      -0.7437727346489083,
+      -0.09922812420886573,
+      -0.25840395153483753,
+      0.8535299776972036,
+      0.2877302401613291,
+      0.64552322654166
+    ]
+  },
+  {
     "rank": 3,
     "action_idx": 2,
     "score": 2,
-    "reason": "The result remains in the drifted OOD state with the arm far to the right and away from the block, showing virtually no correction toward the reference where the arm is centered above/near the block.",
+    "reason": "The result remains in the drifted state with the robot arm off to the right side, failing to return to the reference configuration where the arm is centered below the elevated block.",
     "action": [
       -0.11317160234533774,
       -0.5455225564304462,
@@ -48,7 +48,7 @@
     "rank": 4,
     "action_idx": 3,
     "score": 2,
-    "reason": "The result remains in the drifted state with the arm displaced to the right and the block not elevated, showing no meaningful correction toward the reference where the block is raised high and the arm is centered.",
+    "reason": "The result remains in the drifted state with the robot arm off to the right and the block not being engaged, showing no meaningful correction toward the reference configuration where the arm is centered and the block is elevated above the gripper.",
     "action": [
       -0.2909480637402633,
       0.9413960487898065,
@@ -63,7 +63,7 @@
     "rank": 5,
     "action_idx": 4,
     "score": 2,
-    "reason": "The result remains in the drifted state with the arm far to the right and away from the block, showing no meaningful correction toward the reference where the arm was centered and positioned above/near the block.",
+    "reason": "The result remains in the drifted state with the robot arm displaced to the right and the block lower than the reference, showing no meaningful correction toward the reference trajectory where the block is higher and the arm is centered.",
     "action": [
       -0.6914210158649043,
       0.36609790648490925,
