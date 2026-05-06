@@ -1,0 +1,104 @@
+[
+  {
+    "image": "action_0000.png",
+    "detections": {
+      "red cube": [
+        119,
+        152,
+        130,
+        163
+      ],
+      "robot gripper": [
+        100,
+        100,
+        140,
+        135
+      ]
+    }
+  },
+  {
+    "image": "action_0001.png",
+    "detections": {
+      "red cube": [
+        119,
+        152,
+        130,
+        163
+      ],
+      "robot gripper": [
+        119,
+        24,
+        165,
+        110
+      ]
+    }
+  },
+  {
+    "image": "action_0002.png",
+    "detections": {
+      "red cube": [
+        118,
+        152,
+        128,
+        162
+      ],
+      "robot gripper": [
+        100,
+        115,
+        146,
+        138
+      ]
+    }
+  },
+  {
+    "image": "action_0003.png",
+    "detections": {
+      "red cube": [
+        119,
+        152,
+        130,
+        163
+      ],
+      "robot gripper": [
+        100,
+        25,
+        165,
+        135
+      ]
+    }
+  },
+  {
+    "image": "action_0004.png",
+    "detections": {
+      "red cube": [
+        120,
+        153,
+        129,
+        162
+      ],
+      "robot gripper": [
+        80,
+        50,
+        140,
+        135
+      ]
+    }
+  },
+  {
+    "image": "ood_state.png",
+    "detections": {
+      "red cube": [
+        119,
+        152,
+        130,
+        163
+      ],
+      "robot gripper": [
+        100,
+        108,
+        150,
+        135
+      ]
+    }
+  }
+]

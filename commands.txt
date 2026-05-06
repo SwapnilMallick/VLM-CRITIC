@@ -20,11 +20,11 @@ Available drift directions: x, -x, y, -y, z, -z, or a custom vector like --drift
 
 #### Generate candidate actions ####
 
-python generate_candidate_actions.py --ood ood_state_agentview.npz --n 5 --seed 42
+python generate_candidate_actions.py --ood ood_state_agentview.npz --n 5
 
 #### Render candidate actions ####
 
-python render_candidate_actions.py --camera agentview 
+python render_candidate_actions.py --camera agentview --steps 5
 
 #### Grounded-SAM Segmenatation ####
 
@@ -34,4 +34,5 @@ python grounded_sam_segment.py --img_dir candidate_images_agentview
 
 python qwen_vl_detect.py \
     --model  ~/models/qwen25-vl-7b/Qwen2.5-VL-7B-Instruct-Q4_K_M.gguf \
-    --mmproj ~/models/qwen25-vl-7b/mmproj-model-f16.gguf
+    --mmproj ~/models/qwen25-vl-7b/mmproj-model-f16.gguf \
+    --img_dir candidate_images_frontview
