@@ -1,13 +1,16 @@
 """
-Generate a set of candidate actions for a given OOD state via uniform random
-sampling over the OSC_POSE action space of the Franka Panda.
+Generate a set of candidate actions for a given OOD state.
 
 The Panda with OSC_POSE has a 7-dim action space:
     [dx, dy, dz, dax, day, daz, gripper]
 where each translational/rotational delta is in [-1, 1] and
 gripper = -1 (open) / +1 (close).
 
-All 7 dimensions are sampled i.i.d. from U(-1, 1).
+Translational dims [dx, dy, dz] are sampled as random unit vectors (uniformly
+random direction, magnitude 1.0) so every candidate makes the maximum possible
+displacement in a distinct direction.
+Rotational dims [dax, day, daz] are fixed to 0.
+Gripper is fixed to -1.0 (open) for all candidate actions.
 
 Usage:
     python generate_candidate_actions.py
@@ -23,20 +26,32 @@ import numpy as np
 ACTION_DIM = 7   # OSC_POSE: [dx, dy, dz, dax, day, daz, gripper]
 ACTION_LABELS = ["dx", "dy", "dz", "dax", "day", "daz", "gripper"]
 
+GRIPPER_OPEN = -1.0
+
 
 def load_ood_state(path: str) -> dict:
     data = np.load(path, allow_pickle=True)
     return {k: data[k] for k in data.files}
 
 
-def generate_actions(n: int, rng: np.random.Generator) -> np.ndarray:
-    
-    return rng.uniform(-1.0, 1.0, size=(n, ACTION_DIM))
+def generate_actions(
+    n: int,
+    rng: np.random.Generator,
+    gripper_action: float,
+) -> np.ndarray:
+    """Sample n candidate actions: unit-vector translation, zero rotation, fixed gripper."""
+    raw         = rng.normal(0.0, 1.0, size=(n, 3))
+    translation = raw / np.linalg.norm(raw, axis=1, keepdims=True)
+    rotation    = np.zeros((n, 3))
+    gripper_col = np.full((n, 1), gripper_action)
+    return np.concatenate([translation, rotation, gripper_col], axis=1)
 
 
-def print_summary(actions: np.ndarray) -> None:
+def print_summary(actions: np.ndarray, gripper_action: float) -> None:
     print(f"\nCandidate actions  shape: {actions.shape}")
-    print(f"{'dim':<10} {'min':>8} {'max':>8} {'mean':>8} {'std':>8}")
+    print(f"  gripper fixed to: {gripper_action:+.1f} "
+          f"({'open' if gripper_action < 0 else 'close'})")
+    print(f"\n{'dim':<10} {'min':>8} {'max':>8} {'mean':>8} {'std':>8}")
     print("-" * 46)
     for i, label in enumerate(ACTION_LABELS):
         col = actions[:, i]
@@ -49,18 +64,19 @@ def main(args) -> None:
     print(f"Loaded OOD state from '{args.ood}'")
     print(f"  eef_pos   : {ood['eef_pos']}")
     print(f"  joint_pos : {ood['joint_pos']}")
-    print(f"  gripper   : {ood['gripper']}")
+    print(f"  gripper   : open (fixed, gripper_action=-1.0)")
 
     rng = np.random.default_rng(args.seed)
-    actions = generate_actions(args.n, rng)
+    actions = generate_actions(args.n, rng, GRIPPER_OPEN)
 
-    print_summary(actions)
+    print_summary(actions, GRIPPER_OPEN)
 
     np.savez(
         args.out,
         actions=actions,
         ood_eef_pos=ood["eef_pos"],
         ood_joint_pos=ood["joint_pos"],
+        gripper_action=np.array(GRIPPER_OPEN),
         seed=np.array(args.seed),
     )
     print(f"\nSaved {args.n} candidate actions → {args.out}")
@@ -68,7 +84,7 @@ def main(args) -> None:
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        description="Generate candidate actions for an OOD state via uniform random sampling."
+        description="Generate candidate actions for an OOD state via Gaussian sampling."
     )
     parser.add_argument("--ood",  default=None,
                         help="Path to OOD state .npz file "

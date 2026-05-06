@@ -1,10 +1,14 @@
-Run record_demo.py:
+#### Activate environment ####
+
+source vlm_judge_env/bin/activate
+
+#### Run record_demo.py ####
 
 python record_demo.py --camera sideview --n_demos 1 --steps 200 --video --seed 0
 
 Available cameras: agentview, sideview, frontview, birdview, robot0_robotview, robot0_eye_in_hand
 
-Run create_ood_state.py:
+#### Run create_ood_state.py ####
 
 python create_ood_state.py --camera sideview --ref reference_demos_sideview.h5 --out ood_state_sideview.npz --demo demo_0 --ood_frac 0.3 --drift 0.05 --drift_dir x
 
@@ -13,3 +17,21 @@ python create_ood_state.py --camera frontview --ref reference_demos_frontview.h5
 python create_ood_state.py --camera agentview --ref reference_demos_agentview.h5 --out ood_state_agentview.npz --demo demo_0 --ood_frac 0.3 --drift 0.20 --drift_dir y
 
 Available drift directions: x, -x, y, -y, z, -z, or a custom vector like --drift_dir=1,0.5,0
+
+#### Generate candidate actions ####
+
+python generate_candidate_actions.py --ood ood_state_agentview.npz --n 5 --seed 42
+
+#### Render candidate actions ####
+
+python render_candidate_actions.py --camera agentview 
+
+#### Grounded-SAM Segmenatation ####
+
+python grounded_sam_segment.py --img_dir candidate_images_agentview
+
+#### Qwen2.5-VL-7B Object Detection ####
+
+python qwen_vl_detect.py \
+    --model  ~/models/qwen25-vl-7b/Qwen2.5-VL-7B-Instruct-Q4_K_M.gguf \
+    --mmproj ~/models/qwen25-vl-7b/mmproj-model-f16.gguf

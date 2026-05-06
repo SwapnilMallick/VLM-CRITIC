@@ -4,7 +4,7 @@ Apply each candidate action from the OOD state and save the resulting images.
 For every action in candidate_actions_<camera>.npz the script:
   1. Restores the exact OOD scene (robot pose + cube position) from the sim
      state saved by create_ood_state.py.
-  2. Steps the simulator once with that action.
+  2. Steps the simulator --steps times with that action (default: 10).
   3. Saves the rendered frame as action_XXXX.png and the instance segmentation
      mask as action_XXXX_seg.npy.
 
@@ -96,6 +96,8 @@ def main(args) -> None:
     width = len(str(N))
     for i, action in enumerate(actions):
         restore_ood_state(env, ood_sim_state)
+        for _ in range(args.steps - 1):
+            env.step(action)
         obs, _, _, _ = env.step(action)
 
         frame = obs[obs_key][::-1] if vflip else obs[obs_key]
@@ -123,6 +125,9 @@ if __name__ == "__main__":
     parser.add_argument("--actions",  default=None,
                         help="Path to candidate actions .npz "
                              "(default: candidate_actions_<camera>.npz)")
+    parser.add_argument("--steps",    type=int, default=10,
+                        help="Number of times each action is applied before rendering "
+                             "(default: 10). Higher values = larger visible displacement.")
     parser.add_argument("--out_dir",  default=None,
                         help="Output directory for rendered images "
                              "(default: candidate_images_<camera>/)")
