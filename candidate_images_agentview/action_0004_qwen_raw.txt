@@ -1,0 +1,3 @@
+
+Red cube -> <box>(84,136,105,158) </box>
+Robot gripper -> <box>(0,215,251,308) </box>
