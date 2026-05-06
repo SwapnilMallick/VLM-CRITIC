@@ -30,8 +30,8 @@ def load_ood_state(path: str) -> dict:
 
 
 def generate_actions(n: int, rng: np.random.Generator) -> np.ndarray:
-    """Return (n, 7) array of actions sampled uniformly from [-1, 1]^7."""
-    return rng.uniform(-5.0, 5.0, size=(n, ACTION_DIM))
+    
+    return rng.uniform(-1.0, 1.0, size=(n, ACTION_DIM))
 
 
 def print_summary(actions: np.ndarray) -> None:

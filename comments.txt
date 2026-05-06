@@ -1,0 +1,8 @@
+Generating random actions:
+
+1. If the actions are generated randomly, then gripper will open or close randomly for each candidate action.
+This behavior is not desired. Hence, the gripper state needs to be handled seperately.
+Also, how to assign the correct value of the gripper state ( +1 / -1) for each random action.
+
+2. You can get accurate segmentation masks by adding camera_segmentations="instance" to suite.make() in robosuite. 
+By adding it, the observation dictionary will add a segmentation array along with the image.
