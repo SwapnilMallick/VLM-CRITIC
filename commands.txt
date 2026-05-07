@@ -42,6 +42,10 @@ python qwen_vl_detect.py \
 python intern_vl_detect.py \
     --img_dir candidate_images_frontview
 
+#### Calculate L2 Distance ####
+
+python compute_centroid_distance.py --dir candidate_images_frontview --out centroid_distances.txt
+
 #### Possible prompts for GSAM ####
 
 robot gripper

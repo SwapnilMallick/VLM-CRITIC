@@ -5,8 +5,8 @@ For every action in candidate_actions_<camera>.npz the script:
   1. Restores the exact OOD scene (robot pose + cube position) from the sim
      state saved by create_ood_state.py.
   2. Steps the simulator --steps times with that action (default: 10).
-  3. Saves the rendered frame as action_XXXX.png and the instance segmentation
-     mask as action_XXXX_seg.npy.
+  3. Saves the rendered frame as action_XXXX.png, the raw instance segmentation
+     mask as action_XXXX_seg.npy, and a colorized version as action_XXXX_seg.png.
 
 A copy of the pre-action OOD frame is also saved as ood_state.png so you can
 visually compare starting state vs. result for each candidate.
@@ -30,6 +30,19 @@ import numpy as np
 import robosuite as suite
 
 CAMERAS_NEEDING_VFLIP = {"sideview", "frontview"}
+
+
+def seg_to_png(seg: np.ndarray) -> np.ndarray:
+    """Convert an instance-ID segmentation array to a colorized BGR image."""
+    ids = seg.squeeze()
+    # Map each unique instance ID to a consistent hue via modular arithmetic
+    color_map = np.zeros((*ids.shape, 3), dtype=np.uint8)
+    for uid in np.unique(ids):
+        hue = int((uid * 37) % 180)  # spread hues; 37 is coprime with 180
+        hsv_pixel = np.uint8([[[hue, 200, 220]]])
+        bgr = cv2.cvtColor(hsv_pixel, cv2.COLOR_HSV2BGR)[0, 0]
+        color_map[ids == uid] = bgr
+    return color_map
 
 
 def load_npz(path: str) -> dict:
@@ -90,8 +103,9 @@ def main(args) -> None:
         cv2.cvtColor(ood_frame, cv2.COLOR_RGB2BGR),
     )
     np.save(os.path.join(args.out_dir, "ood_state_seg.npy"), ood_seg)
+    cv2.imwrite(os.path.join(args.out_dir, "ood_state_seg.png"), seg_to_png(ood_seg))
     print(f"Saved OOD reference frame → {args.out_dir}/ood_state.png")
-    print(f"Saved OOD segmentation    → {args.out_dir}/ood_state_seg.npy\n")
+    print(f"Saved OOD segmentation    → {args.out_dir}/ood_state_seg.npy / .png\n")
 
     width = len(str(N))
     for i, action in enumerate(actions):
@@ -105,11 +119,12 @@ def main(args) -> None:
         out_path = os.path.join(args.out_dir, f"action_{i:04d}.png")
         cv2.imwrite(out_path, cv2.cvtColor(frame, cv2.COLOR_RGB2BGR))
         np.save(os.path.join(args.out_dir, f"action_{i:04d}_seg.npy"), seg)
-        print(f"  [{i+1:>{width}}/{N}]  action_{i:04d}.png  "
+        cv2.imwrite(os.path.join(args.out_dir, f"action_{i:04d}_seg.png"), seg_to_png(seg))
+        print(f"  [{i+1:>{width}}/{N}]  action_{i:04d}.png + _seg.png  "
               f"action={np.round(action, 2)}")
 
     env.close()
-    print(f"\nSaved {N} RGB images + {N} segmentation masks + 1 reference → {args.out_dir}/")
+    print(f"\nSaved {N} RGB images + {N} segmentation masks (.npy + .png) + 1 reference → {args.out_dir}/")
 
 
 if __name__ == "__main__":
