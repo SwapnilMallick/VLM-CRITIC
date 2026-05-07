@@ -39,12 +39,12 @@ GDINO_MODEL_ID = "IDEA-Research/grounding-dino-base"
 SAM_MODEL_ID   = "facebook/sam-vit-base"
 
 # Text prompt: period-separated phrases, all lowercase (Grounding DINO requirement)
-TEXT_PROMPT = "red cube. robot gripper."
+TEXT_PROMPT = "red cube. robot end-effector."
 
 # Mask overlay colours (RGBA, values in [0, 1])
 LABEL_COLORS = {
     "red cube":      (1.0, 0.15, 0.15, 0.50),
-    "robot gripper": (0.15, 0.40, 1.00, 0.50),
+    "robot end-effector": (0.15, 0.40, 1.00, 0.50),
     "default":       (0.10, 0.90, 0.10, 0.50),
 }
 
@@ -278,7 +278,7 @@ def main(args) -> None:
     all_pngs = sorted(glob.glob(os.path.join(args.img_dir, "*.png")))
     images   = [p for p in all_pngs
                 if not any(p.endswith(s) for s in
-                           ("_gsam_vis.png", "_seg_inspect.png"))]
+                           ("_qwen_vis.png.", "_gsam_vis.png", "_seg_inspect.png"))]
 
     if not images:
         print(f"No PNG images found in '{args.img_dir}'.")

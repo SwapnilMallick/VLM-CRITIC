@@ -36,3 +36,11 @@ python qwen_vl_detect.py \
     --model  ~/models/qwen25-vl-7b/Qwen2.5-VL-7B-Instruct-Q4_K_M.gguf \
     --mmproj ~/models/qwen25-vl-7b/mmproj-model-f16.gguf \
     --img_dir candidate_images_frontview
+
+#### Possible prompts for GSAM ####
+
+robot gripper
+gripper fingers
+two finger gripper
+robot end effector
+robot wrist and fingers

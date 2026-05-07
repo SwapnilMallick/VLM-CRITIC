@@ -1,3 +1,3 @@
 
 Red cube -> <box> (120,153,129,162) </box>
-Robot gripper -> <box> (80,50,140,135) </box>
+Robot gripper -> <box> (100,108,137,135) </box>

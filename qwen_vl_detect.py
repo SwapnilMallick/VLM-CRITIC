@@ -140,7 +140,7 @@ def parse_boxes(text: str, img_w: int, img_h: int) -> dict[str, list[int] | None
 
     Handles three common response patterns:
       1. User-prompted format:  Red cube -> <box> (x1,y1,x2,y2) </box>
-      2. Qwen native grounding: <|object_ref_start|>...<|box_start|>(x1,y1),(x2,y2)<|box_end|>
+      2. Qwen native grounding: <tool_call>...</tool_call>(x1,y1),(x2,y2)</tool_call>
       3. Bare coords after label: Red cube: x1,y1,x2,y2
     """
     results: dict[str, list[int] | None] = {"red cube": None, "robot gripper": None}
@@ -159,7 +159,7 @@ def parse_boxes(text: str, img_w: int, img_h: int) -> dict[str, list[int] | None
                 _to_pixels(x2, img_w), _to_pixels(y2, img_h),
             ]
 
-    # Pattern 2 — Qwen native: <|object_ref_start|>LABEL<|object_ref_end|><|box_start|>(x1,y1),(x2,y2)<|box_end|>
+    # Pattern 2 — Qwen native: <tool_call>LABEL</tool_call><tool_call>(x1,y1),(x2,y2)</tool_call>
     native = re.findall(
         r"<\|object_ref_start\|>(.*?)<\|object_ref_end\|>"
         r"<\|box_start\|>\((\d+),(\d+)\),\((\d+),(\d+)\)<\|box_end\|>",
