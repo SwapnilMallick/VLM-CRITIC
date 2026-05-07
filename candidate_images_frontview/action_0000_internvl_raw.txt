@@ -1,0 +1,2 @@
+Red cube ->  (420, 500, 520, 580) 
+Robot gripper -> NotFound

@@ -37,6 +37,11 @@ python qwen_vl_detect.py \
     --mmproj ~/models/qwen25-vl-7b/mmproj-model-f16.gguf \
     --img_dir candidate_images_frontview
 
+#### InternVL2-4B Object Detection ####
+
+python intern_vl_detect.py \
+    --img_dir candidate_images_frontview
+
 #### Possible prompts for GSAM ####
 
 robot gripper

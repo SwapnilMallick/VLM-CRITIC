@@ -251,7 +251,7 @@ def main(args) -> None:
     images   = [
         p for p in all_pngs
         if not any(p.endswith(s) for s in
-                   ("_qwen_vis.png", "_gsam_vis.png", "_seg_inspect.png"))
+                   ("_internvl_vis.png", "_qwen_vis.png", "_gsam_vis.png", "_seg_inspect.png"))
     ]
 
     if not images:
