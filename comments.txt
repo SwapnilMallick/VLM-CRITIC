@@ -12,3 +12,9 @@ Another thing to note is that the gripper state is kept open (i.e. -1) in all ca
 
 3. You can get accurate segmentation masks by adding camera_segmentations="instance" to suite.make() in robosuite. 
 By adding it, the observation dictionary will add a segmentation array along with the image.
+
+4. If the robot takes N meta (or uber??) actions from a state (may be perturbed), can a VLM identify the worst K actions based 
+on some threshold.
+Eg, the robot takes 4 actions (moveNorth, moveSouth, moveEast, moveWest) from a state. Each action has a value function. 
+Let the four values are 0.5, 0.2, 0.0, -0.2 and the theshold be 0.1. Then the VLM should be able to filter out the actions that have an 
+associated value <=0.1 (i.e. the actionse with values 0.0 and -0.2). 
