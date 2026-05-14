@@ -17,4 +17,13 @@ By adding it, the observation dictionary will add a segmentation array along wit
 on some threshold.
 Eg, the robot takes 4 actions (moveNorth, moveSouth, moveEast, moveWest) from a state. Each action has a value function. 
 Let the four values are 0.5, 0.2, 0.0, -0.2 and the theshold be 0.1. Then the VLM should be able to filter out the actions that have an 
-associated value <=0.1 (i.e. the actionse with values 0.0 and -0.2). 
+associated value <=0.1 (i.e. the actions with values 0.0 and -0.2).
+
+Task: Out of n actions, find a way to flag the bad actions
+
+1. Starting from a perturbed state take n actions. For these (n + 1) states, we have an image corresponding to each state. 
+We pass these images to a segmentation model to get the features of the cube and the gripper. 
+We store these features in a file (maybe JSON/YAML).
+
+2. Given these features and the task description, we ask an LLM to generate an action rejection function that filters out the k-worst actions.
+

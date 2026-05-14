@@ -133,3 +133,14 @@ record_demo.py → .h5 → create_ood_state.py → .npz pair
 ```bash
 python inspect_segmentation.py --seg candidate_images_sideview/ood_state_seg.npy
 ```
+
+**`render_directional_actions.py`** — alternative to Stage 4 that uses Jacobian IK (not policy rollout) to move the EEF exactly `--dist` metres in each of the 8 compass directions (N, NE, E, SE, S, SW, W, NW) and renders the result. Each direction gets its own subfolder inside `directional_actions_<camera>/` containing `image.png`, `image_seg.npy`, `image_seg.png`, and `state.npz` (which includes a `direction` and `dist_m` key alongside the usual state fields). Also saves the OOD baseline as `ood_state.png`.
+
+```bash
+python render_directional_actions.py --camera agentview --dist 0.025
+python render_directional_actions.py --ood ood_state_sideview.npz --dist 0.05
+```
+
+Compass convention (viewed from above): North = +y, East = +x. All displacements are purely horizontal (z=0). Outputs can be passed directly to `compute_centroid_distance.py` or the VLM scripts by pointing `--dir` / `--img_dir` at the subfolder for a single direction, or the parent `directional_actions_<camera>/` to rank across all directions.
+
+> **Note:** After `env.reset()`, the robot sim object is re-created internally, so `site_id` and `robot` must be re-fetched from `env.robots[0]` after each direction's restore call — the script does this inside the direction loop.

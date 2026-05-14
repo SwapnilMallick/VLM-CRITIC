@@ -1,0 +1,10 @@
+
+REASONING_NORTH: The gripper is positioned directly above the red cube.
+REASONING_SOUTH: The gripper is positioned directly above the red cube.
+REASONING_EAST: The gripper is positioned directly above the red cube.
+REASONING_WEST: The gripper is positioned directly above the red cube.
+
+NORTH: KEEP
+SOUTH: KEEP
+EAST: KEEP
+WEST: KEEP

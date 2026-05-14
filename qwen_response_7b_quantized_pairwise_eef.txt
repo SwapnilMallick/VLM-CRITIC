@@ -1,0 +1,20 @@
+action_0.png:
+  EEF_OOD: [-0.055289, 0.187226, 0.948426]
+  EEF_ACTION: [-0.00622, 0.185233, 0.948595]
+  REASONING: The gripper moved from [-0.055289, 0.187226, 0.948426] to [-0.00622, 0.185233, 0.948595], indicating a slight movement towards the positive x-axis and a slight movement towards the negative y-axis. In the images, the red cube is located above the gripper in both ood_state.png and action_0.png, suggesting that the gripper is still above the red cube. The approximate location of the red cube in pixel space is above the center of the gripper in both images.
+  VERDICT: CLOSER
+action_1.png:
+  EEF_OOD: [-0.055289, 0.187226, 0.948426]
+  EEF_ACTION: [-0.057596, 0.237601, 0.948859]
+  REASONING: 
+  VERDICT: CLOSER
+action_2.png:
+  EEF_OOD: [-0.055289, 0.187226, 0.948426]
+  EEF_ACTION: [-0.057584, 0.137788, 0.948816]
+  REASONING: 
+  VERDICT: CLOSER
+action_3.png:
+  EEF_OOD: [-0.055289, 0.187226, 0.948426]
+  EEF_ACTION: [-0.106052, 0.185121, 0.948581]
+  REASONING: 
+  VERDICT: CLOSER

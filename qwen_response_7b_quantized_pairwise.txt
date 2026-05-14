@@ -1,0 +1,12 @@
+NORTH:
+  REASONING: In the first image (ood_state.png), the gripper is positioned below the red cube, indicating it is not yet in a position to grasp it. In the second image (north.png), the gripper appears to be in a slightly higher position, suggesting it has moved closer to the red cube.
+  VERDICT: CLOSER
+SOUTH:
+  REASONING: In the first image (ood_state.png), the gripper is positioned below the red cube, but it is not in contact with it. In the second image (south.png), the gripper appears to be in a lower position relative to the red cube, indicating that it has moved closer to the red cube.
+  VERDICT: CLOSER
+EAST:
+  REASONING: In the first image (ood_state.png), the gripper is positioned below and to the left of the red cube, indicating it is not yet in a position to grasp the cube. In the second image (east.png), the gripper appears to be in a similar position relative to the red cube, suggesting it has not moved closer or further from the cube in the EAST action.
+  VERDICT: UNKNOWN
+WEST:
+  REASONING: In the ood_state.png, the gripper is positioned below and to the right of the red cube, indicating it is not in a position to grasp the cube. In the west.png, the gripper appears to be in a similar position relative to the red cube, suggesting it has not moved closer or further from the cube.
+  VERDICT: UNKNOWN

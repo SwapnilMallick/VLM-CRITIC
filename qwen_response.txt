@@ -1,0 +1,8 @@
+REASONING_NORTH: In the north.png image, the gripper is positioned directly above the red cube, indicating that the gripper has moved closer to the red cube.
+REASONING_SOUTH: In the south.png image, the gripper is still positioned directly above the red cube, indicating that the gripper has not moved further away from the red cube.
+REASONING_EAST: In the east.png image, the gripper is positioned slightly to the right of the red cube, indicating that the gripper has moved closer to the red cube.
+REASONING_WEST: In the west.png image, the gripper is positioned slightly to the left of the red cube, indicating that the gripper has moved closer to the red cube.
+NORTH: KEEP
+SOUTH: KEEP
+EAST: KEEP
+WEST: KEEP
