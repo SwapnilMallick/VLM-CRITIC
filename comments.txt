@@ -25,5 +25,9 @@ Task: Out of n actions, find a way to flag the bad actions
 We pass these images to a segmentation model to get the features of the cube and the gripper. 
 We store these features in a file (maybe JSON/YAML).
 
+Note: GSAM gives the mask for the entire robot arm and not able to give the mask of only the gripper. 
+Using the in-simulator segmentation buffer can be one option.
+
+
 2. Given these features and the task description, we ask an LLM to generate an action rejection function that filters out the k-worst actions.
 
